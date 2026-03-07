@@ -1,5 +1,9 @@
 body {
   background-color: var(--primary-bg-color);
+  font-family: var(--font-family-monsterrat);
+  font-size: var(--font-size-16);
+
+  color: var(--primary-text-color);
   
 }
 
@@ -16,4 +20,10 @@ body {
 .container .note {
   border: 1px solid var(--primary-bg-color);
   padding: 10px;
+}
+.panel {
+  border-radius: var(--border-round-day-panel);
+  background-color: var(--color-green-100);
+
+
 }

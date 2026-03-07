@@ -7,17 +7,17 @@
   --color-black-100: #000000;
   --color-green-100: #236201;
 
-  --font-family-monsterrat: monsterrat; 
-  --font-family-lacquer: lacquer;
+  --font-family-monsterrat: 'Monsterrat', sans-serif; 
+  --font-family-lacquer: 'Lacquer', sans-serif;
   --font-size-12: #12;
   --font-size-14: #14;
   --font-size-24: #24;
   --font-size-26: #26;
 
-  --border-radius-10: #10;
-  --border-radius-15: #15;
-  --border-radius-24: #24;
-  --border-radius-30: #30;
+  --border-radius-10: 10px;
+  --border-radius-15: 15px;
+  --border-radius-24: 24px;
+  --border-radius-30: 30px;
 
   --border-round-day-panel: var(--border-radius-30);
   --border-round-day-forecast-panel: var(--border-radius-30);
@@ -29,10 +29,8 @@
   --heading-font-secondary: var(--font-family-lacquer);
 
   --app-background: var(--color-white-100);
-  
+
+  --purpe-dark-100: #1e1e1e;
+  --white-100: #FFFFFF; 
+  --primary-text-color: var(--white-100);
 }
-  
-
-
-
-
