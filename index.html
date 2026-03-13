@@ -1,105 +1,526 @@
-<html>
-  <body>
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Weather Widget – Biarritz, FR</title>
-  <link rel="stylesheet" href="css/tokens.css"/>
-  <link rel="stylesheet" href="css/styles.css" />
-  <title>Weather App</title> </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-page: #dce8f5;
+    --bg-card: #111827;
+    --bg-card-inner: #1e2d3d;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --gradient-card: linear-gradient(160deg, #4fc3f7 0%, #3b82f6 40%, #7c3aed 100%);
+    --gradient-bottom-bar: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255,255,255,0.65);
+    --text-muted: rgba(255,255,255,0.4);
+    --card-border: rgba(255,255,255,0.05);
+    --inner-card-bg: rgba(255,255,255,0.07);
+    --selected-day: rgba(255,255,255,0.95);
+    --font: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-page);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .dashboard {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  /* ── LEFT PANEL ── */
+  .panel-left {
+    background: var(--gradient-card);
+    border-radius: 28px;
+    padding: 32px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 680px;
+    box-shadow: 0 24px 60px rgba(59,130,246,0.3);
+  }
+
+  .panel-left::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 260px; height: 260px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .day-name {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+
+  .date-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .location svg { opacity: 0.75; flex-shrink: 0; }
+
+  .weather-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px 0;
+  }
+
+  .sun-icon {
+    width: 80px; height: 80px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sun-core {
+    width: 34px; height: 34px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+  }
+
+  .sun-rays {
+    position: absolute;
+    inset: 0;
+    animation: spin 12s linear infinite;
+  }
+
+  .ray {
+    position: absolute;
+    width: 3px; height: 12px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 2px;
+    left: 50%; top: 0;
+    transform-origin: 50% 40px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .temperature {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .condition {
+    font-size: 1.3rem;
+    color: var(--accent-blue);
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .feels-like {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .sun-times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .sun-box {
+    background: rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 14px 16px;
+    backdrop-filter: blur(8px);
+  }
+
+  .sun-box-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+
+  .sun-box-time {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+
+  /* ── RIGHT PANEL ── */
+  .panel-right {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 18px 20px;
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s ease;
+  }
+  .stat-card:hover { transform: translateY(-2px); }
+
+  .stat-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+
+  .env-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .env-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 22px 24px;
+    border: 1px solid var(--card-border);
+  }
+
+  .env-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .env-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    font-family: var(--font-mono);
+  }
+
+  .env-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ── HOURLY FORECAST ── */
+  .forecast-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 22px 24px;
+    border: 1px solid var(--card-border);
+  }
+
+  .forecast-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+  }
+
+  .hourly-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .hourly-list::-webkit-scrollbar { display: none; }
+
+  .hour-item {
+    flex-shrink: 0;
+    background: var(--inner-card-bg);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 72px;
+    border: 1px solid var(--card-border);
+    transition: background 0.2s;
+  }
+  .hour-item:hover { background: rgba(255,255,255,0.12); }
+
+  .hour-time {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .hour-icon { font-size: 1.5rem; line-height: 1; }
+
+  .hour-temp {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* ── 7-DAY FORECAST ── */
+  .weekly-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .weekly-list::-webkit-scrollbar { display: none; }
+
+  .day-item {
+    flex-shrink: 0;
+    background: var(--inner-card-bg);
+    border-radius: 14px;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 82px;
+    border: 1px solid var(--card-border);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .day-item:hover { background: rgba(255,255,255,0.12); }
+
+  .day-item.active {
+    background: var(--selected-day);
+    border-color: transparent;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .day-item.active .day-label,
+  .day-item.active .day-temp { color: #111827; }
+
+  .day-label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .day-icon { font-size: 1.6rem; line-height: 1; }
+
+  .day-temp {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* ── BOTTOM BAR ── */
+  .bottom-bar {
+    background: var(--gradient-bottom-bar);
+    border-radius: 16px;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    box-shadow: 0 8px 30px rgba(99,102,241,0.35);
+  }
+  .bottom-bar:hover { opacity: 0.9; }
+</style>
 </head>
 <body>
 
-  <article aria-label="Weather widget for Biarritz, FR">
+<div class="dashboard">
 
-    <section class="panel">
-      <header>
-        <h1>Thursday <time datetime="2026-02-27">27 February 2026</time></h1>
-        <address>Biarritz, FR</address>
-      </header>
+  <!-- LEFT PANEL -->
+  <div class="panel-left">
+    <div>
+      <div class="day-name">Thursday</div>
+      <div class="date-text">27 February 2026</div>
+      <div class="location">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Biarritz, FR
+      </div>
+    </div>
 
-      <footer>
-        <img src="" alt="Partly sunny icon" width="64" height="64" />
-        <p><strong>18 °C</strong></p>
-        <p>Sunny</p>
-      </footer>
-    </section>
+    <div class="weather-main">
+      <div class="sun-icon">
+        <div class="sun-core"></div>
+        <div class="sun-rays">
+          <div class="ray" style="transform: rotate(0deg)"></div>
+          <div class="ray" style="transform: rotate(45deg)"></div>
+          <div class="ray" style="transform: rotate(90deg)"></div>
+          <div class="ray" style="transform: rotate(135deg)"></div>
+          <div class="ray" style="transform: rotate(180deg)"></div>
+          <div class="ray" style="transform: rotate(225deg)"></div>
+          <div class="ray" style="transform: rotate(270deg)"></div>
+          <div class="ray" style="transform: rotate(315deg)"></div>
+        </div>
+      </div>
+      <div class="temperature">18 °C</div>
+      <div class="condition">Sunny</div>
+      <div class="feels-like">Feels like 16 °C</div>
+    </div>
 
-    <section aria-label="Weather details and forecast">
+    <div class="sun-times">
+      <div class="sun-box">
+        <div class="sun-box-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          Sunrise
+        </div>
+        <div class="sun-box-time">07:24</div>
+      </div>
+      <div class="sun-box">
+        <div class="sun-box-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Sunset
+        </div>
+        <div class="sun-box-time">18:45</div>
+      </div>
+    </div>
+  </div>
 
-      <table aria-label="Current weather statistics">
-        <tbody>
-          <tr>
-            <th scope="row">Precipitation</th>
-            <td>0%</td>
-          </tr>
-          <tr>
-            <th scope="row">Humidity</th>
-            <td>58%</td>
-          </tr>
-          <tr>
-            <th scope="row">Wind</th>
-            <td>10 km/h</td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- RIGHT PANEL -->
+  <div class="panel-right">
 
-      <nav aria-label="7-day forecast">
-        <h2>7-Day Forecast</h2>
-        <ol>
-          <li>
-            <img src="" alt="Partly sunny" width="32" height="32" />
-            <abbr title="Monday">Mon</abbr>
-            <strong>20 °C</strong>
-          </li>
-          <li>
-            <img src="" alt="Partly sunny" width="32" height="32" />
-            <abbr title="Tuesday">Tue</abbr>
-            <strong>17 °C</strong>
-          </li>
-          <li aria-current="date">
-            <img src="" alt="Partly sunny" width="32" height="32" />
-            <abbr title="Wednesday">Wed</abbr>
-            <strong>17 °C</strong>
-          </li>
-          <li>
-            <img src="" alt="Partly sunny" width="32" height="32" />
-            <abbr title="Thursday">Thu</abbr>
-            <strong>18 °C</strong>
-          </li>
-          <li>
-            <img src="" alt="Partly sunny" width="32" height="32" />
-            <abbr title="Friday">Fri</abbr>
-            <strong>13 °C</strong>
-          </li>
-          <li>
-            <img src="" alt="Rain" width="32" height="32" />
-            <abbr title="Saturday">Sat</abbr>
-            <strong>12 °C</strong>
-          </li>
-          <li>
-            <img src="" alt="Partly sunny" width="32" height="32" />
-            <abbr title="Sunday">Sun</abbr>
-            <strong>18 °C</strong>
-          </li>
-        </ol>
-      </nav>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          Precipitation
+        </div>
+        <div class="stat-value">0%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          Humidity
+        </div>
+        <div class="stat-value">58%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+          Wind
+        </div>
+        <div class="stat-value">10 km/h</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          Visibility
+        </div>
+        <div class="stat-value">10 km</div>
+      </div>
+    </div>
 
-      <button type="button">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-          <circle cx="12" cy="9" r="2.5"/>
-        </svg>
-        New York City
-      </button>
+    <div class="env-row">
+      <div class="env-card">
+        <div class="env-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          UV Index
+        </div>
+        <div class="env-value">5</div>
+        <div class="env-sub">Moderate</div>
+      </div>
+      <div class="env-card">
+        <div class="env-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+          Air Quality
+        </div>
+        <div class="env-value">42</div>
+        <div class="env-sub">Good</div>
+      </div>
+    </div>
 
-    </section>
+    <div class="forecast-card">
+      <div class="forecast-title">Hourly Forecast</div>
+      <div class="hourly-list">
+        <div class="hour-item"><div class="hour-time">12:00</div><div class="hour-icon">☀️</div><div class="hour-temp">18°C</div></div>
+        <div class="hour-item"><div class="hour-time">13:00</div><div class="hour-icon">🌤️</div><div class="hour-temp">19°C</div></div>
+        <div class="hour-item"><div class="hour-time">14:00</div><div class="hour-icon">⛅</div><div class="hour-temp">20°C</div></div>
+        <div class="hour-item"><div class="hour-time">15:00</div><div class="hour-icon">🌥️</div><div class="hour-temp">21°C</div></div>
+        <div class="hour-item"><div class="hour-time">16:00</div><div class="hour-icon">☁️</div><div class="hour-temp">20°C</div></div>
+        <div class="hour-item"><div class="hour-time">17:00</div><div class="hour-icon">☁️</div><div class="hour-temp">19°C</div></div>
+        <div class="hour-item"><div class="hour-time">18:00</div><div class="hour-icon">🌤️</div><div class="hour-temp">18°C</div></div>
+        <div class="hour-item"><div class="hour-time">19:00</div><div class="hour-icon">🌙</div><div class="hour-temp">17°C</div></div>
+      </div>
+    </div>
 
-  </article>
+    <div class="forecast-card">
+      <div class="forecast-title">7-Day Forecast</div>
+      <div class="weekly-list">
+        <div class="day-item active"><div class="day-label">Mon</div><div class="day-icon">🌤️</div><div class="day-temp">20°C</div></div>
+        <div class="day-item"><div class="day-label">Tue</div><div class="day-icon">☁️</div><div class="day-temp">17°C</div></div>
+        <div class="day-item"><div class="day-label">Wed</div><div class="day-icon">⛅</div><div class="day-temp">17°C</div></div>
+        <div class="day-item"><div class="day-label">Thu</div><div class="day-icon">☁️</div><div class="day-temp">18°C</div></div>
+        <div class="day-item"><div class="day-label">Fri</div><div class="day-icon">🌤️</div><div class="day-temp">13°C</div></div>
+        <div class="day-item"><div class="day-label">Sat</div><div class="day-icon">🌧️</div><div class="day-temp">12°C</div></div>
+        <div class="day-item"><div class="day-label">Sun</div><div class="day-icon">☁️</div><div class="day-temp">18°C</div></div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      New York City
+    </div>
+
+  </div>
+</div>
 
 </body>
-</html>
-  </body>
 </html>
