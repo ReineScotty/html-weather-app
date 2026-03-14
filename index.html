@@ -384,143 +384,93 @@
 </head>
 <body>
 
-<div class="dashboard">
+  <article aria-label="Weather widget for Biarritz, FR">
 
-  <!-- LEFT PANEL -->
-  <div class="panel-left">
-    <div>
-      <div class="day-name">Thursday</div>
-      <div class="date-text">27 February 2026</div>
-      <div class="location">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        Biarritz, FR
-      </div>
-    </div>
+    <section class="panel">
+      
+      <header>
+        <h1>Thursday <time datetime="2026-02-27">27 February 2026</time></h1>
+        <address>Biarritz, FR</address>
+      </header>
 
-    <div class="weather-main">
-      <div class="sun-icon">
-        <div class="sun-core"></div>
-        <div class="sun-rays">
-          <div class="ray" style="transform: rotate(0deg)"></div>
-          <div class="ray" style="transform: rotate(45deg)"></div>
-          <div class="ray" style="transform: rotate(90deg)"></div>
-          <div class="ray" style="transform: rotate(135deg)"></div>
-          <div class="ray" style="transform: rotate(180deg)"></div>
-          <div class="ray" style="transform: rotate(225deg)"></div>
-          <div class="ray" style="transform: rotate(270deg)"></div>
-          <div class="ray" style="transform: rotate(315deg)"></div>
-        </div>
-      </div>
-      <div class="temperature">18 °C</div>
-      <div class="condition">Sunny</div>
-      <div class="feels-like">Feels like 16 °C</div>
-    </div>
+      <footer>
+        <img src="" alt="Partly sunny icon" width="64" height="64" />
+        <p><strong>18 °C</strong></p>
+        <p>Sunny</p>
+      </footer>
+    </section>
 
-    <div class="sun-times">
-      <div class="sun-box">
-        <div class="sun-box-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          Sunrise
-        </div>
-        <div class="sun-box-time">07:24</div>
-      </div>
-      <div class="sun-box">
-        <div class="sun-box-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          Sunset
-        </div>
-        <div class="sun-box-time">18:45</div>
-      </div>
-    </div>
-  </div>
+    <section aria-label="Weather details and forecast">
 
-  <!-- RIGHT PANEL -->
-  <div class="panel-right">
+      <table aria-label="Current weather statistics">
+        <tbody>
+          <tr>
+            <th scope="row">Precipitation</th>
+            <td>0%</td>
+          </tr>
+          <tr>
+            <th scope="row">Humidity</th>
+            <td>58%</td>
+          </tr>
+          <tr>
+            <th scope="row">Wind</th>
+            <td>10 km/h</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-          Precipitation
-        </div>
-        <div class="stat-value">0%</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-          Humidity
-        </div>
-        <div class="stat-value">58%</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
-          Wind
-        </div>
-        <div class="stat-value">10 km/h</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
-          Visibility
-        </div>
-        <div class="stat-value">10 km</div>
-      </div>
-    </div>
+      <nav aria-label="7-day forecast">
+        <h2>7-Day Forecast</h2>
+        <ol>
+          <li>
+            <img src="" alt="Partly sunny" width="32" height="32" />
+            <abbr title="Monday">Mon</abbr>
+            <strong>20 °C</strong>
+          </li>
+          <li>
+            <img src="" alt="Partly sunny" width="32" height="32" />
+            <abbr title="Tuesday">Tue</abbr>
+            <strong>17 °C</strong>
+          </li>
+          <li aria-current="date">
+            <img src="" alt="Partly sunny" width="32" height="32" />
+            <abbr title="Wednesday">Wed</abbr>
+            <strong>17 °C</strong>
+          </li>
+          <li>
+            <img src="" alt="Partly sunny" width="32" height="32" />
+            <abbr title="Thursday">Thu</abbr>
+            <strong>18 °C</strong>
+          </li>
+          <li>
+            <img src="" alt="Partly sunny" width="32" height="32" />
+            <abbr title="Friday">Fri</abbr>
+            <strong>13 °C</strong>
+          </li>
+          <li>
+            <img src="" alt="Rain" width="32" height="32" />
+            <abbr title="Saturday">Sat</abbr>
+            <strong>12 °C</strong>
+          </li>
+          <li>
+            <img src="" alt="Partly sunny" width="32" height="32" />
+            <abbr title="Sunday">Sun</abbr>
+            <strong>18 °C</strong>
+          </li>
+        </ol>
+      </nav>
 
-    <div class="env-row">
-      <div class="env-card">
-        <div class="env-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          UV Index
-        </div>
-        <div class="env-value">5</div>
-        <div class="env-sub">Moderate</div>
-      </div>
-      <div class="env-card">
-        <div class="env-label">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
-          Air Quality
-        </div>
-        <div class="env-value">42</div>
-        <div class="env-sub">Good</div>
-      </div>
-    </div>
+      <button type="button">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        New York City
+      </button>
 
-    <div class="forecast-card">
-      <div class="forecast-title">Hourly Forecast</div>
-      <div class="hourly-list">
-        <div class="hour-item"><div class="hour-time">12:00</div><div class="hour-icon">☀️</div><div class="hour-temp">18°C</div></div>
-        <div class="hour-item"><div class="hour-time">13:00</div><div class="hour-icon">🌤️</div><div class="hour-temp">19°C</div></div>
-        <div class="hour-item"><div class="hour-time">14:00</div><div class="hour-icon">⛅</div><div class="hour-temp">20°C</div></div>
-        <div class="hour-item"><div class="hour-time">15:00</div><div class="hour-icon">🌥️</div><div class="hour-temp">21°C</div></div>
-        <div class="hour-item"><div class="hour-time">16:00</div><div class="hour-icon">☁️</div><div class="hour-temp">20°C</div></div>
-        <div class="hour-item"><div class="hour-time">17:00</div><div class="hour-icon">☁️</div><div class="hour-temp">19°C</div></div>
-        <div class="hour-item"><div class="hour-time">18:00</div><div class="hour-icon">🌤️</div><div class="hour-temp">18°C</div></div>
-        <div class="hour-item"><div class="hour-time">19:00</div><div class="hour-icon">🌙</div><div class="hour-temp">17°C</div></div>
-      </div>
-    </div>
+    </section>
 
-    <div class="forecast-card">
-      <div class="forecast-title">7-Day Forecast</div>
-      <div class="weekly-list">
-        <div class="day-item active"><div class="day-label">Mon</div><div class="day-icon">🌤️</div><div class="day-temp">20°C</div></div>
-        <div class="day-item"><div class="day-label">Tue</div><div class="day-icon">☁️</div><div class="day-temp">17°C</div></div>
-        <div class="day-item"><div class="day-label">Wed</div><div class="day-icon">⛅</div><div class="day-temp">17°C</div></div>
-        <div class="day-item"><div class="day-label">Thu</div><div class="day-icon">☁️</div><div class="day-temp">18°C</div></div>
-        <div class="day-item"><div class="day-label">Fri</div><div class="day-icon">🌤️</div><div class="day-temp">13°C</div></div>
-        <div class="day-item"><div class="day-label">Sat</div><div class="day-icon">🌧️</div><div class="day-temp">12°C</div></div>
-        <div class="day-item"><div class="day-label">Sun</div><div class="day-icon">☁️</div><div class="day-temp">18°C</div></div>
-      </div>
-    </div>
-
-    <div class="bottom-bar">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      New York City
-    </div>
-
-  </div>
-</div>
+  </article>
 
 </body>
 </html>
